@@ -28,6 +28,10 @@ index=main host=Netflix type="TV Show" listed_in="*Docuseries*" | stats count
 ```
 Result: 395
 
+<img width="1440" height="875" alt="Screenshot 2026-07-07 at 7 26 39 PM" src="https://github.com/user-attachments/assets/5619e1ce-c6aa-4202-96a2-b6db6aa86633" />
+
+<br>
+
 **Which release year had the most titles rated G?**
 ```
 index=main host=Netflix type="Movie" rating="G" | stats count by release_year | sort -count | head 5
@@ -40,6 +44,10 @@ index=main host=Netflix type="TV Show" | rex field=duration "(?<num_seasons>\d+)
 ```
 This one required extracting a numeric value out of a text field (e.g., "17 Seasons") using `rex` before it could be sorted numerically, since Splunk treats the raw field as a string.
 
+<img width="1440" height="875" alt="Screenshot 2026-07-07 at 7 27 23 PM" src="https://github.com/user-attachments/assets/146ceadc-f9d2-4006-8dbd-8b803b2259ec" />
+
+<br>
+
 ## Investigation: Correlating a File Upload Across Log Sources
 
 The second half of this project simulated tracing a malicious file upload across multiple, independently-formatted log sources; a common real-world SOC task where no single log tells the whole story.
@@ -50,7 +58,13 @@ Starting point: a known malicious file hash.
 index=pathcode host=uploadedhashes 3AADBF7E527FC1A050E1C97FEA1CBA4D
 ```
 
-This identified the source IP address, user agent string, and filename tied to the upload. From there, I cross-referenced that IP against the web server and failed login logs to build out the fuller picture of what led up to the upload, including checking for timestamp alignment between datasets before assuming two events were related. One early hypothesis (that a set of login attempts from the same IP a few hours earlier were tied to the upload) didn't hold up once I compared timestamps closely, which reinforced how easy it is to draw the wrong conclusion in log analysis without verifying time correlation first.
+This identified the source IP address, user agent string, and filename tied to the upload.
+
+<img width="1440" height="875" alt="Screenshot 2026-07-07 at 7 27 49 PM" src="https://github.com/user-attachments/assets/7770c04a-dd83-4531-8f3c-e780aaf5e3b4" />
+
+<br>
+
+From there, I cross-referenced that IP against the web server and failed login logs to build out the fuller picture of what led up to the upload, including checking for timestamp alignment between datasets before assuming two events were related. One early hypothesis (that a set of login attempts from the same IP a few hours earlier were tied to the upload) didn't hold up once I compared timestamps closely, which reinforced how easy it is to draw the wrong conclusion in log analysis without verifying time correlation first.
 
 ## Reflection
 
