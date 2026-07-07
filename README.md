@@ -31,8 +31,9 @@ Result: 395
 <img width="1440" height="875" alt="Screenshot 2026-07-07 at 7 26 39 PM" src="https://github.com/user-attachments/assets/5619e1ce-c6aa-4202-96a2-b6db6aa86633" />
 
 <br>
+<br>
 
-**Which release year had the most titles rated G?**
+## Which release year had the most titles rated G?
 ```
 index=main host=Netflix type="Movie" rating="G" | stats count by release_year | sort -count | head 5
 ```
